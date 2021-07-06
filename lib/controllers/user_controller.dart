@@ -19,8 +19,7 @@ class UserNotifier extends StateNotifier<UserState?> {
             .get('cachedUser'));
 
   void loadUser(UserState? data) {
-    Box<UserState> box = Hive.box<UserState>(PersistenceConstants.userBox);
-    box.put('cachedUser', data!);
+    Hive.box<UserState>(PersistenceConstants.userBox).put('cachedUser', data!);
     if (data is UserGuestState) {
       state = data;
     } else {
@@ -28,13 +27,17 @@ class UserNotifier extends StateNotifier<UserState?> {
     }
   }
 
-  void loginGuest({required String firstName, required String lastName}) {
+  void loginGuest({
+    required String firstName,
+    required String lastName,
+    required int role,
+  }) {
     final user = UserGuestState(
       firstName: firstName,
       lastName: lastName,
+      role: role,
     );
-    Box<UserState> box = Hive.box<UserState>(PersistenceConstants.userBox);
-    box.put('cachedUser', user);
+    Hive.box<UserState>(PersistenceConstants.userBox).put('cachedUser', user);
     state = user;
   }
 
@@ -54,30 +57,50 @@ class UserNotifier extends StateNotifier<UserState?> {
     }
   }
 
-  Future<bool> logout() async {
-    state = null;
-    Box<UserState> box = Hive.box<UserState>(PersistenceConstants.userBox);
-    box.clear();
-    return box.isEmpty;
+  Future<UserLoggedInState> loginWithId(int id) async {
+    final response = await api.post(ApiConstants.loginWithId, data: {
+      'user_id': id,
+    });
+    try {
+      final user = UserLoggedInState.fromJson(response.data['data']);
+      return user;
+    } catch (_) {
+      throw ErrorMessage("User Not Found");
+    }
   }
 
-  Future<bool> registerUser({
+  Future<bool> logout() async {
+    state = null;
+    Hive.box<UserState>(PersistenceConstants.userBox).clear();
+    return state != null;
+  }
+
+  Future<UserLoggedInState> registerUser({
     required String name,
     required String email,
     required String nomorTelp,
     required String password,
+    required String asal,
+    required int role,
   }) async {
-    final response = await api.post(ApiConstants.registerUser, data: {
-      'name': name,
-      'email': email,
-      'nomor_telp': nomorTelp,
-      'password': password,
-    });
+    try {
+      final response = await api.post(ApiConstants.register, data: {
+        'name': name,
+        'nomor_telp': nomorTelp,
+        'email': email,
+        'password': password,
+        'asal': asal,
+        'role': role,
+      });
 
-    final user = UserLoggedInState.fromJson(response.data['data']);
-    Box<UserState> box = Hive.box<UserState>(PersistenceConstants.userBox);
-    box.put('cachedUser', user);
-    state = user;
-    return state != null;
+      if (response.statusCode == 200) {
+        final user = await loginWithId(response.data['user_id'] as int);
+        return user;
+      } else {
+        throw ErrorMessage(response.data['message'] as String);
+      }
+    } catch (e) {
+      throw ErrorMessage("Gagal register");
+    }
   }
 }

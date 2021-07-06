@@ -32,11 +32,6 @@ import '../../page/webinar_page.dart';
           name: 'CreatorLoginRouter',
           page: CreatorLoginPage,
         ),
-        AutoRoute(
-          path: 'register-creator',
-          name: 'CreatorRegisterRouter',
-          page: CreatorRegisterPage,
-        ),
       ],
     ),
     AutoRoute(
@@ -79,14 +74,14 @@ import '../../page/webinar_page.dart';
           ],
         ),
         AutoRoute(
-          path: 'create',
+          path: 'webinar-create',
           name: 'WebinarCreateRouter',
           page: WebinarCreate,
         ),
         AutoRoute(
-          path: 'register-user',
-          name: 'UserRegisterRouter',
-          page: UserRegisterPage,
+          path: 'register',
+          name: 'RegisterRouter',
+          page: RegisterPage,
         ),
       ],
     ),

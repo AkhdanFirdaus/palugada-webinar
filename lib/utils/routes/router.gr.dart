@@ -7,12 +7,12 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
-import '../../page/home_page.dart' as _i5;
+import '../../page/home_page.dart' as _i4;
 import '../../page/info_page.dart' as _i7;
 import '../../page/login_page.dart' as _i3;
 import '../../page/profile_page.dart' as _i8;
-import '../../page/register_page.dart' as _i4;
-import '../../page/webinar_create_page.dart' as _i6;
+import '../../page/register_page.dart' as _i6;
+import '../../page/webinar_create_page.dart' as _i5;
 import '../../page/webinar_detail_page.dart' as _i10;
 import '../../page/webinar_page.dart' as _i9;
 
@@ -48,25 +48,21 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (_) {
           return _i3.CreatorLoginPage();
         }),
-    CreatorRegisterRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
-        routeData: routeData,
-        builder: (_) {
-          return _i4.CreatorRegisterPage();
-        }),
     HomeRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i5.HomePage();
+          return _i4.HomePage();
         }),
     WebinarCreateRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i6.WebinarCreate();
+          return _i5.WebinarCreate();
         }),
-    UserRegisterRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
+    RegisterRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
-        builder: (_) {
-          return _i4.UserRegisterPage();
+        builder: (data) {
+          final args = data.argsAs<RegisterRouterArgs>();
+          return _i6.RegisterPage(args.role);
         }),
     InfoRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -106,9 +102,7 @@ class AppRouter extends _i1.RootStackRouter {
             children: [
               _i1.RouteConfig(ChooseRouter.name, path: ''),
               _i1.RouteConfig(UserLoginRouter.name, path: 'login-user'),
-              _i1.RouteConfig(CreatorLoginRouter.name, path: 'login-creator'),
-              _i1.RouteConfig(CreatorRegisterRouter.name,
-                  path: 'register-creator')
+              _i1.RouteConfig(CreatorLoginRouter.name, path: 'login-creator')
             ]),
         _i1.RouteConfig(HomeWrapperRouter.name, path: 'home', children: [
           _i1.RouteConfig(HomeRouter.name, path: '', children: [
@@ -123,8 +117,8 @@ class AppRouter extends _i1.RootStackRouter {
             _i1.RouteConfig('*#redirect',
                 path: '*', redirectTo: '/', fullMatch: true)
           ]),
-          _i1.RouteConfig(WebinarCreateRouter.name, path: 'create'),
-          _i1.RouteConfig(UserRegisterRouter.name, path: 'register-user')
+          _i1.RouteConfig(WebinarCreateRouter.name, path: 'webinar-create'),
+          _i1.RouteConfig(RegisterRouter.name, path: 'register')
         ])
       ];
 }
@@ -161,12 +155,6 @@ class CreatorLoginRouter extends _i1.PageRouteInfo {
   static const String name = 'CreatorLoginRouter';
 }
 
-class CreatorRegisterRouter extends _i1.PageRouteInfo {
-  const CreatorRegisterRouter() : super(name, path: 'register-creator');
-
-  static const String name = 'CreatorRegisterRouter';
-}
-
 class HomeRouter extends _i1.PageRouteInfo {
   const HomeRouter({List<_i1.PageRouteInfo>? children})
       : super(name, path: '', initialChildren: children);
@@ -175,15 +163,22 @@ class HomeRouter extends _i1.PageRouteInfo {
 }
 
 class WebinarCreateRouter extends _i1.PageRouteInfo {
-  const WebinarCreateRouter() : super(name, path: 'create');
+  const WebinarCreateRouter() : super(name, path: 'webinar-create');
 
   static const String name = 'WebinarCreateRouter';
 }
 
-class UserRegisterRouter extends _i1.PageRouteInfo {
-  const UserRegisterRouter() : super(name, path: 'register-user');
+class RegisterRouter extends _i1.PageRouteInfo<RegisterRouterArgs> {
+  RegisterRouter({required int role})
+      : super(name, path: 'register', args: RegisterRouterArgs(role: role));
 
-  static const String name = 'UserRegisterRouter';
+  static const String name = 'RegisterRouter';
+}
+
+class RegisterRouterArgs {
+  const RegisterRouterArgs({required this.role});
+
+  final int role;
 }
 
 class InfoRouter extends _i1.PageRouteInfo {

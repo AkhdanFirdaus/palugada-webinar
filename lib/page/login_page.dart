@@ -100,7 +100,27 @@ class UserLoginPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 38),
-              _UserLoginGuestWidget(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: Card(
+                  color: Colors.blue,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.school,
+                          size: 48,
+                        ),
+                        Text("Saya Peserta"),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 38),
+              _LoginGuestWidget("Nama Depan", "Nama Belakang", 3),
               SizedBox(height: 38),
               Divider(),
               SizedBox(height: 38),
@@ -210,7 +230,11 @@ class _LoginWidget extends HookConsumerWidget {
   }
 }
 
-class _UserLoginGuestWidget extends HookConsumerWidget {
+class _LoginGuestWidget extends HookConsumerWidget {
+  _LoginGuestWidget(this.labelNama, this.labelAsal, this.role);
+  final String labelNama;
+  final String labelAsal;
+  final int role;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final firstNameController = useTextEditingController();
@@ -225,34 +249,14 @@ class _UserLoginGuestWidget extends HookConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.2,
-            child: Card(
-              color: Colors.blue,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.school,
-                      size: 48,
-                    ),
-                    Text("Saya Peserta"),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 38),
-          Text("Nama Depan"),
+          Text(labelNama),
           SizedBox(height: 8),
           TextFormField(
             textInputAction: TextInputAction.next,
             controller: firstNameController,
           ),
           SizedBox(height: 18),
-          Text("Nama Belakang"),
+          Text(labelAsal),
           SizedBox(height: 8),
           TextFormField(
             textInputAction: TextInputAction.done,
@@ -267,6 +271,7 @@ class _UserLoginGuestWidget extends HookConsumerWidget {
                         ref.read(userProvider.notifier).loginGuest(
                               firstName: firstNameController.text,
                               lastName: lastNameController.text,
+                              role: role,
                             );
                         Future.delayed(Duration(seconds: 1));
                         context.router.root.replace(
@@ -304,50 +309,7 @@ class CreatorLoginPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 38),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.2,
-              child: Card(
-                color: Colors.teal.shade200,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.apartment,
-                        size: 48,
-                      ),
-                      Text("Penyelenggara"),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 38),
-            Text("Nama Penyelenggara"),
-            SizedBox(height: 8),
-            TextFormField(),
-            SizedBox(height: 18),
-            Text("Institusi"),
-            SizedBox(height: 8),
-            TextFormField(),
-            SizedBox(height: 18),
-            ButtonBar(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    context.router.root.replace(
-                      HomeRouter(
-                        children: [
-                          InfoRouter(),
-                        ],
-                      ),
-                    );
-                  },
-                  child: Text("Masuk"),
-                ),
-              ],
-            ),
+            _LoginGuestWidget("Nama Penyelenggara", "Institusi", 1),
             SizedBox(height: 38),
             Divider(),
             SizedBox(height: 38),

@@ -38,7 +38,7 @@ class MyApp extends HookConsumerWidget {
             UnauthenticatedWrapperRouter(),
         ],
       ),
-      title: 'Flutter Demo',
+      title: 'Palugada Webinar',
       theme: PalugadaTheme.defaultTheme,
     );
   }

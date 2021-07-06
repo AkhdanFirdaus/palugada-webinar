@@ -1,9 +1,9 @@
 class ApiConstants {
   static const baseUrl = "http://192.168.1.10:8000/api/";
   static const login = "login";
+  static const loginWithId = "login-with-id";
   static const logout = "logout";
-  static const registerUser = "register-user";
-  static const registerCreator = "register-creator";
+  static const register = "register";
 
   static const webinar = "webinar";
   static String favorite(int id) => "user/$id/favorite";

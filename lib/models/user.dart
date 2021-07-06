@@ -18,11 +18,13 @@ class UserGuestState extends Equatable implements UserState {
   final String? firstName;
   @HiveField(1)
   final String? lastName;
+  @HiveField(2)
+  final int? role;
 
-  UserGuestState({this.firstName, this.lastName});
+  UserGuestState({this.firstName, this.lastName, this.role});
 
   @override
-  List<Object?> get props => [firstName, lastName];
+  List<Object?> get props => [firstName, lastName, role];
 }
 
 @HiveType(typeId: 1)

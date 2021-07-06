@@ -19,17 +19,20 @@ class UserGuestStateAdapter extends TypeAdapter<UserGuestState> {
     return UserGuestState(
       firstName: fields[0] as String?,
       lastName: fields[1] as String?,
+      role: fields[2] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserGuestState obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.firstName)
       ..writeByte(1)
-      ..write(obj.lastName);
+      ..write(obj.lastName)
+      ..writeByte(2)
+      ..write(obj.role);
   }
 
   @override

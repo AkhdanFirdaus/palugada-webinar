@@ -22,16 +22,28 @@ class ProfilePage extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
-                        "Halo " + userState.firstName! + "!",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4!
-                            .copyWith(fontWeight: FontWeight.bold),
+                      ListTile(
+                        title: Text(
+                          "Halo " + userState.firstName! + "!",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Chip(
+                        label: Text(
+                          userState.role == 1 ? "Penyelenggara" : "Peserta",
+                        ),
+                        labelStyle: TextStyle(color: Colors.white),
+                        backgroundColor: userState.role == 1
+                            ? Color(0xff716FFF)
+                            : Colors.pinkAccent,
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          context.router.push(UserRegisterRouter());
+                          int role = userState.role!;
+                          context.navigateTo(RegisterRouter(role: role));
                         },
                         child: Text(
                           "Anda belum terdaftar, klik disini untuk daftar",
@@ -50,13 +62,17 @@ class ProfilePage extends HookConsumerWidget {
                         ),
                         subtitle: Text(userState.email),
                         trailing: Chip(
-                          label: Text("Creator"),
+                          label: Text(
+                            userState.role == 1 ? "Penyelenggara" : "Peserta",
+                          ),
                           labelStyle: TextStyle(color: Colors.white),
-                          backgroundColor: Color(0xff716FFF),
+                          backgroundColor: userState.role == 1
+                              ? Color(0xff716FFF)
+                              : Colors.pinkAccent,
                         ),
                       ),
                       SizedBox(height: 38),
-                      Text("Asal"),
+                      Text(userState.role == 1 ? "Institusi" : "Asal"),
                       SizedBox(height: 8),
                       Card(
                         child: ListTile(title: Text(userState.asal)),
