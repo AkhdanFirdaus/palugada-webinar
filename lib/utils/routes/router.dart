@@ -79,6 +79,16 @@ import '../../page/webinar_page.dart';
           page: WebinarCreate,
         ),
         AutoRoute(
+          path: 'webinar-my',
+          name: 'MyWebinarRouter',
+          page: WebinarPage,
+        ),
+        AutoRoute(
+          path: 'webinar-joined',
+          name: 'JoinedWebinarRouter',
+          page: WebinarPage,
+        ),
+        AutoRoute(
           path: 'register',
           name: 'RegisterRouter',
           page: RegisterPage,

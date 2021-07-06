@@ -14,16 +14,24 @@ final userProvider = StateNotifierProvider<UserNotifier, UserState?>((ref) {
 
 class UserNotifier extends StateNotifier<UserState?> {
   final Dio api;
+
   UserNotifier(this.api, [UserState? state])
       : super(Hive.box<UserState>(PersistenceConstants.userBox)
             .get('cachedUser'));
 
-  void loadUser(UserState? data) {
-    Hive.box<UserState>(PersistenceConstants.userBox).put('cachedUser', data!);
+  void loadUser(UserState data) {
+    Hive.box<UserState>(PersistenceConstants.userBox).put('cachedUser', data);
     if (data is UserGuestState) {
       state = data;
     } else {
-      state = data as UserLoggedInState;
+      state = (data as UserLoggedInState).copyWith(
+        id: data.id,
+        name: data.name,
+        asal: data.asal,
+        email: data.email,
+        notelp: data.notelp,
+        role: data.role,
+      );
     }
   }
 
@@ -69,12 +77,6 @@ class UserNotifier extends StateNotifier<UserState?> {
     }
   }
 
-  Future<bool> logout() async {
-    state = null;
-    Hive.box<UserState>(PersistenceConstants.userBox).clear();
-    return state != null;
-  }
-
   Future<UserLoggedInState> registerUser({
     required String name,
     required String email,
@@ -102,5 +104,10 @@ class UserNotifier extends StateNotifier<UserState?> {
     } catch (e) {
       throw ErrorMessage("Gagal register");
     }
+  }
+
+  void logout() async {
+    Hive.box<UserState>(PersistenceConstants.userBox).clear();
+    state = null;
   }
 }

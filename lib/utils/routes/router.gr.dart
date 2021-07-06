@@ -8,13 +8,14 @@ import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
 import '../../page/home_page.dart' as _i4;
-import '../../page/info_page.dart' as _i7;
+import '../../page/info_page.dart' as _i8;
 import '../../page/login_page.dart' as _i3;
-import '../../page/profile_page.dart' as _i8;
-import '../../page/register_page.dart' as _i6;
+import '../../page/profile_page.dart' as _i9;
+import '../../page/register_page.dart' as _i7;
 import '../../page/webinar_create_page.dart' as _i5;
 import '../../page/webinar_detail_page.dart' as _i10;
-import '../../page/webinar_page.dart' as _i9;
+import '../../page/webinar_page.dart' as _i6;
+import '../constants/enums.dart' as _i11;
 
 class AppRouter extends _i1.RootStackRouter {
   AppRouter([_i2.GlobalKey<_i2.NavigatorState>? navigatorKey])
@@ -58,16 +59,28 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (_) {
           return _i5.WebinarCreate();
         }),
+    MyWebinarRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<MyWebinarRouterArgs>();
+          return _i6.WebinarPage(args.type, args.userId);
+        }),
+    JoinedWebinarRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (data) {
+          final args = data.argsAs<JoinedWebinarRouterArgs>();
+          return _i6.WebinarPage(args.type, args.userId);
+        }),
     RegisterRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (data) {
           final args = data.argsAs<RegisterRouterArgs>();
-          return _i6.RegisterPage(args.role);
+          return _i7.RegisterPage(args.role);
         }),
     InfoRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i7.InfoPage();
+          return _i8.InfoPage();
         }),
     WebinarRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -77,12 +90,13 @@ class AppRouter extends _i1.RootStackRouter {
     ProfileRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i8.ProfilePage();
+          return _i9.ProfilePage();
         }),
     WebinarRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
-        builder: (_) {
-          return _i9.WebinarPage();
+        builder: (data) {
+          final args = data.argsAs<WebinarRouteArgs>();
+          return _i6.WebinarPage(args.type, args.userId);
         }),
     WebinarDetailRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -118,6 +132,8 @@ class AppRouter extends _i1.RootStackRouter {
                 path: '*', redirectTo: '/', fullMatch: true)
           ]),
           _i1.RouteConfig(WebinarCreateRouter.name, path: 'webinar-create'),
+          _i1.RouteConfig(MyWebinarRouter.name, path: 'webinar-my'),
+          _i1.RouteConfig(JoinedWebinarRouter.name, path: 'webinar-joined'),
           _i1.RouteConfig(RegisterRouter.name, path: 'register')
         ])
       ];
@@ -168,6 +184,40 @@ class WebinarCreateRouter extends _i1.PageRouteInfo {
   static const String name = 'WebinarCreateRouter';
 }
 
+class MyWebinarRouter extends _i1.PageRouteInfo<MyWebinarRouterArgs> {
+  MyWebinarRouter({required _i11.webinarType type, required int? userId})
+      : super(name,
+            path: 'webinar-my',
+            args: MyWebinarRouterArgs(type: type, userId: userId));
+
+  static const String name = 'MyWebinarRouter';
+}
+
+class MyWebinarRouterArgs {
+  const MyWebinarRouterArgs({required this.type, required this.userId});
+
+  final _i11.webinarType type;
+
+  final int? userId;
+}
+
+class JoinedWebinarRouter extends _i1.PageRouteInfo<JoinedWebinarRouterArgs> {
+  JoinedWebinarRouter({required _i11.webinarType type, required int? userId})
+      : super(name,
+            path: 'webinar-joined',
+            args: JoinedWebinarRouterArgs(type: type, userId: userId));
+
+  static const String name = 'JoinedWebinarRouter';
+}
+
+class JoinedWebinarRouterArgs {
+  const JoinedWebinarRouterArgs({required this.type, required this.userId});
+
+  final _i11.webinarType type;
+
+  final int? userId;
+}
+
 class RegisterRouter extends _i1.PageRouteInfo<RegisterRouterArgs> {
   RegisterRouter({required int role})
       : super(name, path: 'register', args: RegisterRouterArgs(role: role));
@@ -200,10 +250,20 @@ class ProfileRouter extends _i1.PageRouteInfo {
   static const String name = 'ProfileRouter';
 }
 
-class WebinarRoute extends _i1.PageRouteInfo {
-  const WebinarRoute() : super(name, path: '');
+class WebinarRoute extends _i1.PageRouteInfo<WebinarRouteArgs> {
+  WebinarRoute({required _i11.webinarType type, required int? userId})
+      : super(name,
+            path: '', args: WebinarRouteArgs(type: type, userId: userId));
 
   static const String name = 'WebinarRoute';
+}
+
+class WebinarRouteArgs {
+  const WebinarRouteArgs({required this.type, required this.userId});
+
+  final _i11.webinarType type;
+
+  final int? userId;
 }
 
 class WebinarDetailRoute extends _i1.PageRouteInfo<WebinarDetailRouteArgs> {

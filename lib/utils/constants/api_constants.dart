@@ -9,6 +9,7 @@ class ApiConstants {
   static String favorite(int id) => "user/$id/favorite";
   static String myWebinar(int id) => "user/$id/my-webinar";
   static String countMyWebinar(int id) => "user/$id/count-webinar";
+  static String joinedWebinar(int id) => "user/$id/diikuti";
   static const webinarCreate = "";
   static const webinarRegister = "";
 

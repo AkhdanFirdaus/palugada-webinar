@@ -43,7 +43,7 @@ class ProfilePage extends HookConsumerWidget {
                       ElevatedButton(
                         onPressed: () {
                           int role = userState.role!;
-                          context.navigateTo(RegisterRouter(role: role));
+                          context.router.push(RegisterRouter(role: role));
                         },
                         child: Text(
                           "Anda belum terdaftar, klik disini untuk daftar",

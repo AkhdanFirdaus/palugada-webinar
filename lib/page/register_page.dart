@@ -5,7 +5,6 @@ import 'package:motion_toast/motion_toast.dart';
 import 'package:palugada/controllers/user_controller.dart';
 import 'package:palugada/models/user.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:palugada/utils/routes/router.gr.dart';
 
 class RegisterPage extends HookConsumerWidget {
   RegisterPage(this.role);
@@ -145,9 +144,14 @@ class RegisterPage extends HookConsumerWidget {
                                   toastDuration: Duration(seconds: 2),
                                 ).show(context);
                                 Future.delayed(Duration(seconds: 2), () {
-                                  ref
-                                      .read(userProvider.notifier)
-                                      .loadUser(value);
+                                  MotionToast.info(
+                                    title: "Login Ulang",
+                                    description: "Silahkan login ulang",
+                                    toastDuration: Duration(seconds: 2),
+                                  ).show(context);
+                                  Future.delayed(Duration(seconds: 2), () {
+                                    ref.read(userProvider.notifier).logout();
+                                  });
                                 });
                               }).catchError((e) {
                                 MotionToast.error(

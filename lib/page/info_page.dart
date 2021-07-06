@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/controllers/count_controller.dart';
-import 'package:palugada/controllers/user_controller.dart';
-import 'package:palugada/controllers/webinar_controller.dart';
-import 'package:palugada/models/user.dart';
+
+import '../controllers/count_controller.dart';
+import '../controllers/user_controller.dart';
+import '../controllers/webinar_controller.dart';
+import '../models/user.dart';
+import '../utils/constants/enums.dart';
 import '../utils/routes/router.gr.dart';
 
 class InfoPage extends StatelessWidget {
@@ -390,7 +392,12 @@ class _InfoAction extends ConsumerWidget {
                     child: Card(
                       color: Colors.teal,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          context.router.push(JoinedWebinarRouter(
+                            type: webinarType.my,
+                            userId: user.id,
+                          ));
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(24.0),
                           child: Column(
@@ -455,7 +462,12 @@ class _InfoAction extends ConsumerWidget {
                   child: Card(
                     color: Colors.teal,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        context.router.push(JoinedWebinarRouter(
+                          type: webinarType.joined,
+                          userId: user.id,
+                        ));
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(24.0),
                         child: Column(

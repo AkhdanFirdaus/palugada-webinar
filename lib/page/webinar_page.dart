@@ -5,13 +5,28 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:palugada/controllers/webinar_controller.dart';
 import 'package:palugada/models/webinar.dart';
 import '../utils/routes/router.gr.dart';
+import '../utils/constants/enums.dart';
 
 class WebinarPage extends HookConsumerWidget {
+  WebinarPage([this.type = webinarType.all, this.userId]);
+  final webinarType type;
+  final int? userId;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _scrollController = useScrollController();
     final searchController = useTextEditingController();
-    final webinarList = ref.watch(webinarFutureProvider);
+    AsyncValue<List<WebinarState>> webinarList() {
+      switch (type) {
+        case webinarType.all:
+          return ref.watch(webinarFutureProvider);
+        case webinarType.joined:
+          return ref.watch(joinedWebinarFutureProvider(userId!));
+        case webinarType.my:
+          return ref.watch(myWebinarFutureProvider(userId!));
+      }
+    }
+
     final search = useState<String>("");
     useEffect(() {
       searchController.addListener(() {
@@ -52,7 +67,7 @@ class WebinarPage extends HookConsumerWidget {
                 ),
               ),
               SizedBox(height: 38),
-              webinarList.when(
+              webinarList().when(
                 data: (data) {
                   return ValueListenableBuilder<String>(
                       valueListenable: search,
