@@ -54,25 +54,31 @@ class UserLoggedInStateAdapter extends TypeAdapter<UserLoggedInState> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserLoggedInState(
-      name: fields[0] as String,
-      email: fields[1] as String,
-      notelp: fields[2] as String,
-      password: fields[3] as String,
+      id: fields[0] as int,
+      name: fields[1] as String,
+      email: fields[2] as String,
+      notelp: fields[3] as String,
+      asal: fields[4] as String,
+      role: fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserLoggedInState obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.name)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.email)
+      ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.notelp)
+      ..write(obj.email)
       ..writeByte(3)
-      ..write(obj.password);
+      ..write(obj.notelp)
+      ..writeByte(4)
+      ..write(obj.asal)
+      ..writeByte(5)
+      ..write(obj.role);
   }
 
   @override

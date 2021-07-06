@@ -13,67 +13,81 @@ import '../../page/webinar_page.dart';
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
     AutoRoute(
-      initial: true,
       path: '/',
-      name: 'ChooseRouter',
-      page: ChoosePage,
-    ),
-    AutoRoute(
-      path: 'login-user',
-      name: 'UserLoginRouter',
-      page: UserLoginPage,
-    ),
-    AutoRoute(
-      path: 'login-creator',
-      name: 'CreatorLoginRouter',
-      page: CreatorLoginPage,
-    ),
-    AutoRoute(
-      path: 'register-user',
-      name: 'UserRegisterRouter',
-      page: UserRegisterPage,
-    ),
-    AutoRoute(
-      path: 'register-creator',
-      name: 'CreatorRegisterRouter',
-      page: CreatorRegisterPage,
-    ),
-    AutoRoute(
-      path: 'create',
-      name: 'WebinarCreateRouter',
-      page: WebinarCreate,
+      name: 'UnauthenticatedWrapperRouter',
+      page: EmptyRouterPage,
+      children: [
+        AutoRoute(
+          path: '',
+          name: 'ChooseRouter',
+          page: ChoosePage,
+        ),
+        AutoRoute(
+          path: 'login-user',
+          name: 'UserLoginRouter',
+          page: UserLoginPage,
+        ),
+        AutoRoute(
+          path: 'login-creator',
+          name: 'CreatorLoginRouter',
+          page: CreatorLoginPage,
+        ),
+        AutoRoute(
+          path: 'register-creator',
+          name: 'CreatorRegisterRouter',
+          page: CreatorRegisterPage,
+        ),
+      ],
     ),
     AutoRoute(
       path: 'home',
-      page: HomePage,
+      name: 'HomeWrapperRouter',
+      page: EmptyRouterPage,
       children: [
         AutoRoute(
-          path: 'info',
-          name: 'InfoRouter',
-          page: InfoPage,
-        ),
-        AutoRoute(
-          path: 'webinar',
-          name: 'WebinarRouter',
-          page: EmptyRouterPage,
+          path: '',
+          name: 'HomeRouter',
+          page: HomePage,
           children: [
             AutoRoute(
-              path: '',
-              page: WebinarPage,
+              path: 'info',
+              name: 'InfoRouter',
+              page: InfoPage,
             ),
             AutoRoute(
-              path: ':webinarId',
-              page: WebinarDetailPage,
+              path: 'webinar',
+              name: 'WebinarRouter',
+              page: EmptyRouterPage,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: WebinarPage,
+                ),
+                AutoRoute(
+                  path: ':webinarId',
+                  page: WebinarDetailPage,
+                ),
+                RedirectRoute(path: '*', redirectTo: '/'),
+              ],
+            ),
+            AutoRoute(
+              path: 'profile',
+              name: 'ProfileRouter',
+              page: ProfilePage,
             ),
             RedirectRoute(path: '*', redirectTo: '/'),
           ],
         ),
         AutoRoute(
-          path: 'profile',
-          name: 'ProfileRouter',
-          page: ProfilePage,
+          path: 'create',
+          name: 'WebinarCreateRouter',
+          page: WebinarCreate,
         ),
-        RedirectRoute(path: '*', redirectTo: '/'),
+        AutoRoute(
+          path: 'register-user',
+          name: 'UserRegisterRouter',
+          page: UserRegisterPage,
+        ),
       ],
     ),
   ],

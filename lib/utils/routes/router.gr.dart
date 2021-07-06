@@ -7,12 +7,12 @@
 import 'package:auto_route/auto_route.dart' as _i1;
 import 'package:flutter/material.dart' as _i2;
 
-import '../../page/home_page.dart' as _i6;
+import '../../page/home_page.dart' as _i5;
 import '../../page/info_page.dart' as _i7;
 import '../../page/login_page.dart' as _i3;
 import '../../page/profile_page.dart' as _i8;
 import '../../page/register_page.dart' as _i4;
-import '../../page/webinar_create_page.dart' as _i5;
+import '../../page/webinar_create_page.dart' as _i6;
 import '../../page/webinar_detail_page.dart' as _i10;
 import '../../page/webinar_page.dart' as _i9;
 
@@ -22,6 +22,17 @@ class AppRouter extends _i1.RootStackRouter {
 
   @override
   final Map<String, _i1.PageFactory> pagesMap = {
+    UnauthenticatedWrapperRouter.name: (routeData) =>
+        _i1.MaterialPageX<dynamic>(
+            routeData: routeData,
+            builder: (_) {
+              return const _i1.EmptyRouterPage();
+            }),
+    HomeWrapperRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return const _i1.EmptyRouterPage();
+        }),
     ChooseRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
@@ -37,25 +48,25 @@ class AppRouter extends _i1.RootStackRouter {
         builder: (_) {
           return _i3.CreatorLoginPage();
         }),
-    UserRegisterRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
-        routeData: routeData,
-        builder: (_) {
-          return _i4.UserRegisterPage();
-        }),
     CreatorRegisterRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
           return _i4.CreatorRegisterPage();
         }),
+    HomeRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
+        routeData: routeData,
+        builder: (_) {
+          return _i5.HomePage();
+        }),
     WebinarCreateRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i5.WebinarCreate();
+          return _i6.WebinarCreate();
         }),
-    HomeRoute.name: (routeData) => _i1.MaterialPageX<dynamic>(
+    UserRegisterRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
         builder: (_) {
-          return _i6.HomePage();
+          return _i4.UserRegisterPage();
         }),
     InfoRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -90,29 +101,50 @@ class AppRouter extends _i1.RootStackRouter {
 
   @override
   List<_i1.RouteConfig> get routes => [
-        _i1.RouteConfig(ChooseRouter.name, path: '/'),
-        _i1.RouteConfig(UserLoginRouter.name, path: 'login-user'),
-        _i1.RouteConfig(CreatorLoginRouter.name, path: 'login-creator'),
-        _i1.RouteConfig(UserRegisterRouter.name, path: 'register-user'),
-        _i1.RouteConfig(CreatorRegisterRouter.name, path: 'register-creator'),
-        _i1.RouteConfig(WebinarCreateRouter.name, path: 'create'),
-        _i1.RouteConfig(HomeRoute.name, path: 'home', children: [
-          _i1.RouteConfig(InfoRouter.name, path: 'info'),
-          _i1.RouteConfig(WebinarRouter.name, path: 'webinar', children: [
-            _i1.RouteConfig(WebinarRoute.name, path: ''),
-            _i1.RouteConfig(WebinarDetailRoute.name, path: ':webinarId'),
+        _i1.RouteConfig(UnauthenticatedWrapperRouter.name,
+            path: '/',
+            children: [
+              _i1.RouteConfig(ChooseRouter.name, path: ''),
+              _i1.RouteConfig(UserLoginRouter.name, path: 'login-user'),
+              _i1.RouteConfig(CreatorLoginRouter.name, path: 'login-creator'),
+              _i1.RouteConfig(CreatorRegisterRouter.name,
+                  path: 'register-creator')
+            ]),
+        _i1.RouteConfig(HomeWrapperRouter.name, path: 'home', children: [
+          _i1.RouteConfig(HomeRouter.name, path: '', children: [
+            _i1.RouteConfig(InfoRouter.name, path: 'info'),
+            _i1.RouteConfig(WebinarRouter.name, path: 'webinar', children: [
+              _i1.RouteConfig(WebinarRoute.name, path: ''),
+              _i1.RouteConfig(WebinarDetailRoute.name, path: ':webinarId'),
+              _i1.RouteConfig('*#redirect',
+                  path: '*', redirectTo: '/', fullMatch: true)
+            ]),
+            _i1.RouteConfig(ProfileRouter.name, path: 'profile'),
             _i1.RouteConfig('*#redirect',
                 path: '*', redirectTo: '/', fullMatch: true)
           ]),
-          _i1.RouteConfig(ProfileRouter.name, path: 'profile'),
-          _i1.RouteConfig('*#redirect',
-              path: '*', redirectTo: '/', fullMatch: true)
+          _i1.RouteConfig(WebinarCreateRouter.name, path: 'create'),
+          _i1.RouteConfig(UserRegisterRouter.name, path: 'register-user')
         ])
       ];
 }
 
+class UnauthenticatedWrapperRouter extends _i1.PageRouteInfo {
+  const UnauthenticatedWrapperRouter({List<_i1.PageRouteInfo>? children})
+      : super(name, path: '/', initialChildren: children);
+
+  static const String name = 'UnauthenticatedWrapperRouter';
+}
+
+class HomeWrapperRouter extends _i1.PageRouteInfo {
+  const HomeWrapperRouter({List<_i1.PageRouteInfo>? children})
+      : super(name, path: 'home', initialChildren: children);
+
+  static const String name = 'HomeWrapperRouter';
+}
+
 class ChooseRouter extends _i1.PageRouteInfo {
-  const ChooseRouter() : super(name, path: '/');
+  const ChooseRouter() : super(name, path: '');
 
   static const String name = 'ChooseRouter';
 }
@@ -129,16 +161,17 @@ class CreatorLoginRouter extends _i1.PageRouteInfo {
   static const String name = 'CreatorLoginRouter';
 }
 
-class UserRegisterRouter extends _i1.PageRouteInfo {
-  const UserRegisterRouter() : super(name, path: 'register-user');
-
-  static const String name = 'UserRegisterRouter';
-}
-
 class CreatorRegisterRouter extends _i1.PageRouteInfo {
   const CreatorRegisterRouter() : super(name, path: 'register-creator');
 
   static const String name = 'CreatorRegisterRouter';
+}
+
+class HomeRouter extends _i1.PageRouteInfo {
+  const HomeRouter({List<_i1.PageRouteInfo>? children})
+      : super(name, path: '', initialChildren: children);
+
+  static const String name = 'HomeRouter';
 }
 
 class WebinarCreateRouter extends _i1.PageRouteInfo {
@@ -147,11 +180,10 @@ class WebinarCreateRouter extends _i1.PageRouteInfo {
   static const String name = 'WebinarCreateRouter';
 }
 
-class HomeRoute extends _i1.PageRouteInfo {
-  const HomeRoute({List<_i1.PageRouteInfo>? children})
-      : super(name, path: 'home', initialChildren: children);
+class UserRegisterRouter extends _i1.PageRouteInfo {
+  const UserRegisterRouter() : super(name, path: 'register-user');
 
-  static const String name = 'HomeRoute';
+  static const String name = 'UserRegisterRouter';
 }
 
 class InfoRouter extends _i1.PageRouteInfo {
