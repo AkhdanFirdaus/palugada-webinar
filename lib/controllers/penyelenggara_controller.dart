@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/models/user.dart';
-import 'package:palugada/utils/network/api.dart';
+import '../models/user.dart';
+import '../utils/network/api.dart';
 
 final penyelenggaraFutureProvider = FutureProvider<List<User>>((ref) async {
   final api = ref.read(apiProvider);

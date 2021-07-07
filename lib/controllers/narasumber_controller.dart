@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/models/user.dart';
+import '../models/user.dart';
 
 final narasumberProvider =
     StateNotifierProvider<NarasumberNotifier, List<User>>((ref) {

@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:palugada/page/penyelenggara_detail.dart';
-import 'package:palugada/page/penyelenggara_page.dart';
+import '../../page/penyelenggara_detail.dart';
+import '../../page/penyelenggara_page.dart';
 import '../../page/home_page.dart';
 import '../../page/info_page.dart';
 import '../../page/login_page.dart';

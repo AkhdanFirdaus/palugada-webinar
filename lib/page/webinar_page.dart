@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/controllers/webinar_controller.dart';
-import 'package:palugada/models/webinar.dart';
+import '../controllers/webinar_controller.dart';
+import '../models/webinar.dart';
 import '../utils/routes/router.gr.dart';
 import '../utils/constants/enums.dart';
 
@@ -99,22 +99,36 @@ class WebinarPage extends HookConsumerWidget {
                 ),
               Container(
                 margin: EdgeInsets.only(top: 38),
-                child: TextFormField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    labelText: "Cari Webinar",
-                    fillColor: Colors.grey.shade200,
-                    suffixIcon: search.value.isNotEmpty
-                        ? IconButton(
-                            onPressed: () {
-                              searchController.clear();
-                              FocusScope.of(context).unfocus();
-                            },
-                            icon: Icon(Icons.close),
-                          )
-                        : null,
-                  ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          labelText: "Cari Webinar",
+                          fillColor: Colors.grey.shade200,
+                          suffixIcon: search.value.isNotEmpty
+                              ? IconButton(
+                                  onPressed: () {
+                                    searchController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                  icon: Icon(Icons.close),
+                                )
+                              : null,
+                        ),
+                      ),
+                    ),
+                    Card(
+                      child: IconButton(
+                        onPressed: () {
+                          ref.refresh(webinarFutureProvider);
+                        },
+                        icon: Icon(Icons.refresh),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 38),

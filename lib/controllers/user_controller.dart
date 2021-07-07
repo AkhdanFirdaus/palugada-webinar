@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:fresh_dio/fresh_dio.dart';
 import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/utils/constants/persistence_constants.dart';
-import 'package:palugada/utils/network/api.dart';
+import '../utils/constants/persistence_constants.dart';
+import '../utils/network/api.dart';
 
 import '../models/user.dart';
 

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/controllers/user_controller.dart';
-import 'package:palugada/models/user.dart';
-import 'package:palugada/utils/constants/persistence_constants.dart';
+import 'controllers/user_controller.dart';
+import 'models/user.dart';
+import 'utils/constants/persistence_constants.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'utils/routes/router.gr.dart';

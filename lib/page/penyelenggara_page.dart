@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/controllers/user_controller.dart';
+import '../controllers/user_controller.dart';
 
 import '../controllers/penyelenggara_controller.dart';
 import '../controllers/webinar_controller.dart';
@@ -67,22 +67,41 @@ class PenyelenggaraPage extends HookConsumerWidget {
               ),
               Container(
                 margin: EdgeInsets.only(top: 38),
-                child: TextFormField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    labelText: "Cari Penyelenggara",
-                    fillColor: Colors.grey.shade200,
-                    suffixIcon: search.value.isNotEmpty
-                        ? IconButton(
-                            onPressed: () {
-                              searchController.clear();
-                              FocusScope.of(context).unfocus();
-                            },
-                            icon: Icon(Icons.close),
-                          )
-                        : null,
-                  ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          labelText: "Cari Penyelenggara",
+                          fillColor: Colors.grey.shade200,
+                          suffixIcon: search.value.isNotEmpty
+                              ? IconButton(
+                                  onPressed: () {
+                                    searchController.clear();
+                                    FocusScope.of(context).unfocus();
+                                  },
+                                  icon: Icon(Icons.close),
+                                )
+                              : null,
+                        ),
+                      ),
+                    ),
+                    Card(
+                      child: IconButton(
+                        onPressed: () {
+                          if (isFavorite) {
+                            return ref
+                                .refresh(favoriteUserFutureProvider(userId!));
+                          } else {
+                            return ref.refresh(penyelenggaraFutureProvider);
+                          }
+                        },
+                        icon: Icon(Icons.refresh),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 38),

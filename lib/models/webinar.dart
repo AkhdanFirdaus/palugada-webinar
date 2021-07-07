@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:palugada/models/user.dart';
+import 'user.dart';
 
 typedef Json = Map<String, dynamic>;
 

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/models/user.dart';
+import '../models/user.dart';
 
 import '../models/webinar.dart';
 import '../utils/network/api.dart';

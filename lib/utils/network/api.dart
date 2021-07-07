@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fresh_dio/fresh_dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/utils/constants/api_constants.dart';
+import '../constants/api_constants.dart';
 
 export '../constants/api_constants.dart';
 

@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:palugada/utils/network/api.dart';
+import '../utils/network/api.dart';
 
 final countWebinarProvider = FutureProvider<int>((ref) async {
   final api = ref.read(apiProvider);

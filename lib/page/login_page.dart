@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:motion_toast/motion_toast.dart';
-import 'package:palugada/controllers/user_controller.dart';
+import '../controllers/user_controller.dart';
 import '../utils/routes/router.gr.dart';
 
 class ChoosePage extends StatelessWidget {
@@ -306,6 +306,26 @@ class CreatorLoginPage extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(top: 38),
                 child: Card(child: BackButton()),
+              ),
+            ),
+            SizedBox(height: 38),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.2,
+              child: Card(
+                color: Colors.teal.shade200,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.apartment,
+                        size: 48,
+                      ),
+                      Text("Saya Penyelenggara"),
+                    ],
+                  ),
+                ),
               ),
             ),
             SizedBox(height: 38),

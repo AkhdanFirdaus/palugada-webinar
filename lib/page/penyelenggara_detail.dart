@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:motion_toast/motion_toast.dart';
-import 'package:palugada/controllers/user_controller.dart';
-import 'package:palugada/controllers/webinar_controller.dart';
-import 'package:palugada/models/user.dart';
+import '../controllers/user_controller.dart';
+import '../controllers/webinar_controller.dart';
+import '../models/user.dart';
 
 import '../controllers/penyelenggara_controller.dart';
 

@@ -188,12 +188,17 @@ class _InfoAction extends ConsumerWidget {
               onTap: () {
                 if (user.role == 1) {
                   context.router.push(JoinedWebinarRouter(
-                    type: webinarType.joined,
+                    type: webinarType.my,
                     userId: user.id,
                   ));
                 } else if (user.role == 3) {
                   context.router.push(JoinedWebinarRouter(
-                    type: webinarType.my,
+                    type: webinarType.joined,
+                    userId: user.id,
+                  ));
+                } else {
+                  context.router.push(JoinedWebinarRouter(
+                    type: webinarType.joined,
                     userId: user.id,
                   ));
                 }

@@ -2,11 +2,13 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:motion_toast/motion_toast.dart';
-import 'package:palugada/controllers/user_controller.dart';
-import 'package:palugada/controllers/webinar_controller.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:palugada/models/user.dart';
-import 'package:palugada/utils/routes/router.gr.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../controllers/user_controller.dart';
+import '../controllers/webinar_controller.dart';
+import '../models/user.dart';
+import '../utils/routes/router.gr.dart';
 
 class WebinarDetailPage extends HookConsumerWidget {
   WebinarDetailPage({@PathParam('webinarId') required this.webinarId});
@@ -196,25 +198,57 @@ class WebinarDetailPage extends HookConsumerWidget {
                     ),
                   ),
                   SizedBox(height: 38),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Link Webinar"),
-                        SizedBox(height: 8),
-                        Card(
-                          child: ListTile(
-                            onTap: () {},
-                            title: Text(data.link),
-                            trailing: ElevatedButton(
-                              onPressed: () {},
-                              child: Icon(Icons.copy),
+                  if (user is User)
+                    if (data.pendaftar!.indexWhere((e) => e.id == user.id) !=
+                            -1 ||
+                        data.penyelenggara.id == user.id)
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Link Webinar"),
+                            SizedBox(height: 8),
+                            Card(
+                              child: ListTile(
+                                onTap: () async {
+                                  await launch(data.link);
+                                },
+                                title: Text(data.link),
+                                trailing: ElevatedButton(
+                                  onPressed: () {},
+                                  child: Icon(Icons.copy),
+                                ),
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                  if (user is User)
+                    if (data.penyelenggara.id == user.id)
+                      if (data.pendaftar!.isNotEmpty)
+                        Container(
+                          child: Column(
+                            children: [
+                              SizedBox(height: 38),
+                              Text("Pendaftar"),
+                              SizedBox(height: 8),
+                              Card(
+                                child: Column(
+                                  children: [
+                                    for (final pendaftar in data.pendaftar!)
+                                      ListTile(
+                                        title: Text(pendaftar.name),
+                                        subtitle: Text(pendaftar.email +
+                                            "\n" +
+                                            pendaftar.notelp),
+                                        isThreeLine: true,
+                                      )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
                   SizedBox(height: 38),
                   FractionallySizedBox(
                     widthFactor: 1,

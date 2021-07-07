@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:motion_toast/motion_toast.dart';
-import 'package:palugada/controllers/narasumber_controller.dart';
-import 'package:palugada/controllers/user_controller.dart';
-import 'package:palugada/controllers/webinar_controller.dart';
-import 'package:palugada/models/user.dart';
+import '../controllers/narasumber_controller.dart';
+import '../controllers/user_controller.dart';
+import '../controllers/webinar_controller.dart';
+import '../models/user.dart';
 
 class WebinarCreate extends HookConsumerWidget {
   @override
