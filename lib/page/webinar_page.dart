@@ -8,23 +8,38 @@ import '../utils/routes/router.gr.dart';
 import '../utils/constants/enums.dart';
 
 class WebinarPage extends HookConsumerWidget {
-  WebinarPage([this.type = webinarType.all, this.userId]);
-  final webinarType type;
+  WebinarPage({this.type = webinarType.all, this.userId});
+  final webinarType? type;
   final int? userId;
+
+  String title() {
+    switch (type!) {
+      case webinarType.joined:
+        return "Joined Webinar";
+      case webinarType.my:
+        return "My Webinar";
+      case webinarType.all:
+        return "Webinar";
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _scrollController = useScrollController();
     final searchController = useTextEditingController();
+
     AsyncValue<List<WebinarState>> webinarList() {
-      switch (type) {
-        case webinarType.all:
-          return ref.watch(webinarFutureProvider);
-        case webinarType.joined:
-          return ref.watch(joinedWebinarFutureProvider(userId!));
-        case webinarType.my:
-          return ref.watch(myWebinarFutureProvider(userId!));
+      if (type != null) {
+        switch (type!) {
+          case webinarType.all:
+            return ref.watch(webinarFutureProvider);
+          case webinarType.joined:
+            return ref.watch(joinedWebinarFutureProvider(userId!));
+          case webinarType.my:
+            return ref.watch(myWebinarFutureProvider(userId!));
+        }
       }
+      return ref.watch(webinarFutureProvider);
     }
 
     final search = useState<String>("");
@@ -40,12 +55,45 @@ class WebinarPage extends HookConsumerWidget {
         minimum: const EdgeInsets.all(24),
         child: RefreshIndicator(
           onRefresh: () {
-            ref.refresh(webinarFutureProvider);
+            if (type != null) {
+              switch (type!) {
+                case webinarType.all:
+                  ref.refresh(webinarFutureProvider);
+                  break;
+                case webinarType.joined:
+                  ref.refresh(joinedWebinarFutureProvider(userId!));
+                  break;
+                case webinarType.my:
+                  ref.refresh(myWebinarFutureProvider(userId!));
+                  break;
+              }
+            }
             return Future.value();
           },
           child: ListView(
             controller: _scrollController,
             children: [
+              if (userId != null)
+                Container(
+                  margin: const EdgeInsets.only(top: 38),
+                  child: AppBar(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    leading: Card(
+                      child: BackButton(
+                        onPressed: () {
+                          context.router.pop();
+                        },
+                        color: Colors.black,
+                      ),
+                    ),
+                    title: Text(
+                      title(),
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    centerTitle: true,
+                  ),
+                ),
               Container(
                 margin: EdgeInsets.only(top: 38),
                 child: TextFormField(
@@ -96,10 +144,6 @@ class WebinarPage extends HookConsumerWidget {
                   return Center(child: Text(e.toString()));
                 },
               ),
-              // if (webinarList != null)
-              //   for (final webinar in webinarList) _CardItem(webinar)
-              // else
-              //   Center(child: Text("Tidak ada webinar"))
             ],
           ),
         ),
@@ -110,7 +154,6 @@ class WebinarPage extends HookConsumerWidget {
 
 class _CardItem extends StatelessWidget {
   _CardItem(this.webinar);
-
   final WebinarState webinar;
 
   @override
@@ -118,9 +161,7 @@ class _CardItem extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          context.router.push(
-            WebinarDetailRoute(webinarId: webinar.id),
-          );
+          context.router.push(WebinarDetailRouter(webinarId: webinar.id));
         },
         child: Padding(
           padding: const EdgeInsets.all(12.0),

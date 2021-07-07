@@ -57,7 +57,7 @@ class ProfilePage extends HookConsumerWidget {
                     children: [
                       ListTile(
                         title: Text(
-                          (userState as UserLoggedInState).name,
+                          (userState as User).name,
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(userState.email),

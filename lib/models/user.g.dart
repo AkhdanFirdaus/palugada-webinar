@@ -46,17 +46,17 @@ class UserGuestStateAdapter extends TypeAdapter<UserGuestState> {
           typeId == other.typeId;
 }
 
-class UserLoggedInStateAdapter extends TypeAdapter<UserLoggedInState> {
+class UserAdapter extends TypeAdapter<User> {
   @override
   final int typeId = 1;
 
   @override
-  UserLoggedInState read(BinaryReader reader) {
+  User read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return UserLoggedInState(
+    return User(
       id: fields[0] as int,
       name: fields[1] as String,
       email: fields[2] as String,
@@ -67,7 +67,7 @@ class UserLoggedInStateAdapter extends TypeAdapter<UserLoggedInState> {
   }
 
   @override
-  void write(BinaryWriter writer, UserLoggedInState obj) {
+  void write(BinaryWriter writer, User obj) {
     writer
       ..writeByte(6)
       ..writeByte(0)
@@ -90,7 +90,7 @@ class UserLoggedInStateAdapter extends TypeAdapter<UserLoggedInState> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UserLoggedInStateAdapter &&
+      other is UserAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -28,7 +28,7 @@ class UserGuestState extends Equatable implements UserState {
 }
 
 @HiveType(typeId: 1)
-class UserLoggedInState extends Equatable implements UserState {
+class User extends Equatable implements UserState {
   @HiveField(0)
   final int id;
   @HiveField(1)
@@ -41,17 +41,19 @@ class UserLoggedInState extends Equatable implements UserState {
   final String asal;
   @HiveField(5)
   final int role;
+  final int? countWebinar;
 
-  UserLoggedInState({
+  User({
     required this.id,
     required this.name,
     required this.email,
     required this.notelp,
     required this.asal,
     required this.role,
+    this.countWebinar,
   });
 
-  UserLoggedInState copyWith({
+  User copyWith({
     int? id,
     String? name,
     String? email,
@@ -59,25 +61,28 @@ class UserLoggedInState extends Equatable implements UserState {
     String? password,
     String? asal,
     int? role,
+    int? countWebinar,
   }) {
-    return UserLoggedInState(
+    return User(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
       notelp: notelp ?? this.notelp,
       asal: asal ?? this.asal,
       role: role ?? this.role,
+      countWebinar: countWebinar ?? this.countWebinar,
     );
   }
 
-  factory UserLoggedInState.fromJson(Json json) {
-    return UserLoggedInState(
+  factory User.fromJson(Json json) {
+    return User(
       id: json['id'],
       name: json['name'],
       email: json['email'],
       notelp: json['nomor_telp'],
       asal: json['asal'],
       role: json['role'],
+      countWebinar: json['count_webinar'],
     );
   }
 
@@ -89,9 +94,18 @@ class UserLoggedInState extends Equatable implements UserState {
       "nomor_telp": notelp,
       "asal": asal,
       "role": role,
+      "count_webinar": countWebinar,
     };
   }
 
   @override
-  List<Object?> get props => [id, name, email, notelp, asal, role];
+  List<Object?> get props => [
+        id,
+        name,
+        email,
+        notelp,
+        asal,
+        role,
+        countWebinar,
+      ];
 }

@@ -14,7 +14,7 @@ import 'utils/themes/palugada_theme.dart';
 void main() async {
   setPathUrlStrategy();
   await Hive.initFlutter();
-  Hive.registerAdapter(UserLoggedInStateAdapter());
+  Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(UserGuestStateAdapter());
   await Hive.openBox<UserState>(PersistenceConstants.userBox);
   runApp(ProviderScope(child: MyApp()));

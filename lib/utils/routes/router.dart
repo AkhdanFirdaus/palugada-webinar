@@ -1,5 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:palugada/page/penyelenggara_detail.dart';
+import 'package:palugada/page/penyelenggara_page.dart';
 import '../../page/home_page.dart';
 import '../../page/info_page.dart';
 import '../../page/login_page.dart';
@@ -52,18 +54,7 @@ import '../../page/webinar_page.dart';
             AutoRoute(
               path: 'webinar',
               name: 'WebinarRouter',
-              page: EmptyRouterPage,
-              children: [
-                AutoRoute(
-                  path: '',
-                  page: WebinarPage,
-                ),
-                AutoRoute(
-                  path: ':webinarId',
-                  page: WebinarDetailPage,
-                ),
-                RedirectRoute(path: '*', redirectTo: '/'),
-              ],
+              page: WebinarPage,
             ),
             AutoRoute(
               path: 'profile',
@@ -89,9 +80,24 @@ import '../../page/webinar_page.dart';
           page: WebinarPage,
         ),
         AutoRoute(
+          path: 'webinar-detail/:id',
+          name: 'WebinarDetailRouter',
+          page: WebinarDetailPage,
+        ),
+        AutoRoute(
           path: 'register',
           name: 'RegisterRouter',
           page: RegisterPage,
+        ),
+        AutoRoute(
+          path: 'penyelenggara',
+          name: 'PenyelenggaraRouter',
+          page: PenyelenggaraPage,
+        ),
+        AutoRoute(
+          path: 'penyelenggara/:id',
+          name: 'PenyelenggaraDetailRouter',
+          page: PenyelenggaraDetailPage,
         ),
       ],
     ),

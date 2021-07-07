@@ -11,8 +11,10 @@ class WebinarState extends Equatable {
   final String tanggal;
   final String jamMulai;
   final String jamSelesai;
-  final UserLoggedInState penyelenggara;
-  final List<UserLoggedInState>? narasumber;
+  final String link;
+  final User penyelenggara;
+  final List<User>? narasumber;
+  final List<User>? pendaftar;
 
   WebinarState({
     required this.id,
@@ -22,8 +24,10 @@ class WebinarState extends Equatable {
     required this.tanggal,
     required this.jamMulai,
     required this.jamSelesai,
+    required this.link,
     required this.penyelenggara,
     this.narasumber,
+    this.pendaftar,
   });
 
   WebinarState copyWith({
@@ -35,8 +39,10 @@ class WebinarState extends Equatable {
     String? password,
     String? jamMulai,
     String? jamSelesai,
-    UserLoggedInState? penyelenggara,
-    List<UserLoggedInState>? narasumber,
+    String? link,
+    User? penyelenggara,
+    List<User>? narasumber,
+    List<User>? pendaftar,
   }) {
     return WebinarState(
       id: id ?? this.id,
@@ -46,8 +52,10 @@ class WebinarState extends Equatable {
       tanggal: tanggal ?? this.tanggal,
       jamMulai: jamMulai ?? this.jamMulai,
       jamSelesai: jamSelesai ?? this.jamSelesai,
+      link: link ?? this.link,
       penyelenggara: penyelenggara ?? this.penyelenggara,
       narasumber: narasumber ?? this.narasumber,
+      pendaftar: pendaftar ?? this.pendaftar,
     );
   }
 
@@ -60,12 +68,17 @@ class WebinarState extends Equatable {
       tanggal: json['tanggal'],
       jamMulai: json['jam_mulai'],
       jamSelesai: json['jam_selesai'],
-      penyelenggara: UserLoggedInState.fromJson(json['penyelenggara']),
+      link: json['link'],
+      penyelenggara: User.fromJson(json['penyelenggara']),
       narasumber: json['narasumber'] == null
           ? null
           : (json['narasumber'] as List)
-              .map<UserLoggedInState>(
-                  (e) => UserLoggedInState.fromJson(e as Json))
+              .map<User>((e) => User.fromJson(e as Json))
+              .toList(),
+      pendaftar: json['pendaftar'] == null
+          ? null
+          : (json['pendaftar'] as List)
+              .map<User>((e) => User.fromJson(e as Json))
               .toList(),
     );
   }
@@ -78,9 +91,11 @@ class WebinarState extends Equatable {
       'kuota': kuota,
       'nomor_telp': tanggal,
       'jam_mulai': jamMulai,
-      'jamSelesai': jamSelesai,
+      'jam_selesai': jamSelesai,
+      'link': link,
       'penyelenggara': penyelenggara,
       'narasumber': narasumber,
+      'pendaftar': pendaftar,
     };
   }
 
@@ -92,6 +107,7 @@ class WebinarState extends Equatable {
         tanggal,
         jamMulai,
         jamSelesai,
+        link,
         penyelenggara,
         narasumber,
       ];

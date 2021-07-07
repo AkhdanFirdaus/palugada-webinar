@@ -24,7 +24,7 @@ class UserNotifier extends StateNotifier<UserState?> {
     if (data is UserGuestState) {
       state = data;
     } else {
-      state = (data as UserLoggedInState).copyWith(
+      state = (data as User).copyWith(
         id: data.id,
         name: data.name,
         asal: data.asal,
@@ -49,7 +49,7 @@ class UserNotifier extends StateNotifier<UserState?> {
     state = user;
   }
 
-  Future<UserLoggedInState> loginUser({
+  Future<User> loginUser({
     required String email,
     required String password,
   }) async {
@@ -58,26 +58,26 @@ class UserNotifier extends StateNotifier<UserState?> {
       'password': password,
     });
     try {
-      final user = UserLoggedInState.fromJson(response.data['data']);
+      final user = User.fromJson(response.data['data']);
       return user;
     } catch (_) {
       throw ErrorMessage("Invalid credential");
     }
   }
 
-  Future<UserLoggedInState> loginWithId(int id) async {
+  Future<User> loginWithId(int id) async {
     final response = await api.post(ApiConstants.loginWithId, data: {
       'user_id': id,
     });
     try {
-      final user = UserLoggedInState.fromJson(response.data['data']);
+      final user = User.fromJson(response.data['data']);
       return user;
     } catch (_) {
       throw ErrorMessage("User Not Found");
     }
   }
 
-  Future<UserLoggedInState> registerUser({
+  Future<User> registerUser({
     required String name,
     required String email,
     required String nomorTelp,
