@@ -45,6 +45,7 @@ class RegisterPage extends HookConsumerWidget {
           },
           child: ListView(
             children: [
+              SizedBox(height: 38),
               AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -57,7 +58,7 @@ class RegisterPage extends HookConsumerWidget {
                   ),
                 ),
                 title: Text(
-                  role == 1 ? "Daftar Peserta" : "Daftar Penyelenggara",
+                  role == 1 ? "Daftar Penyelenggara" : "Daftar Peserta",
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 centerTitle: true,

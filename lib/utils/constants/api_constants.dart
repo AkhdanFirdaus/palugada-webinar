@@ -9,15 +9,17 @@ class ApiConstants {
   static const registerWebinar = "webinar/daftar";
   static String webinarDetail(int id) => "webinar/$id";
 
-  static String favorite(int id) => "user/$id/favorite";
   static String myWebinar(int id) => "user/$id/my-webinar";
   static String countMyWebinar(int id) => "user/$id/count-webinar";
   static String joinedWebinar(int id) => "user/$id/diikuti";
+  static String favoriteWebinar(int id) => "user/$id/favorite";
+  static const favorite = "user/favorite";
 
   static const penyelenggara = "penyelenggara";
   static String penyelenggaraDetail(int id) => "penyelenggara/$id";
+  static String penyelenggaraWebinar(int id) => "webinar/penyelenggara/$id";
 
-  static const webinarCreate = "";
+  static const createWebinar = "webinar";
 
   static const countWebinar = "count-webinar";
   static const countPendaftar = "count-pendaftar";

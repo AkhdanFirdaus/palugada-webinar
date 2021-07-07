@@ -30,7 +30,7 @@ class UserGuestState extends Equatable implements UserState {
 @HiveType(typeId: 1)
 class User extends Equatable implements UserState {
   @HiveField(0)
-  final int id;
+  final int? id;
   @HiveField(1)
   final String name;
   @HiveField(2)
@@ -40,16 +40,16 @@ class User extends Equatable implements UserState {
   @HiveField(4)
   final String asal;
   @HiveField(5)
-  final int role;
+  final int? role;
   final int? countWebinar;
 
   User({
-    required this.id,
     required this.name,
     required this.email,
     required this.notelp,
     required this.asal,
-    required this.role,
+    this.id,
+    this.role,
     this.countWebinar,
   });
 
@@ -88,13 +88,10 @@ class User extends Equatable implements UserState {
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
       'name': name,
       'email': email,
       "nomor_telp": notelp,
       "asal": asal,
-      "role": role,
-      "count_webinar": countWebinar,
     };
   }
 

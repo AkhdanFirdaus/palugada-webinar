@@ -36,44 +36,49 @@ class InfoPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.18,
             padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 36),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Consumer(
                   builder: (context, ref, child) {
                     final count = ref.watch(countWebinarProvider);
-                    return count.when(
-                      data: (data) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              data.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(color: Colors.white),
-                            ),
-                            Text(
-                              "Webinar",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ],
-                        );
+                    return GestureDetector(
+                      onTap: () {
+                        ref.refresh(countWebinarProvider);
                       },
-                      loading: () {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                      error: (e, s) {
-                        return Center(
-                          child: Text("error"),
-                        );
-                      },
+                      child: count.when(
+                        data: (data) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                data.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4!
+                                    .copyWith(color: Colors.white),
+                              ),
+                              Text(
+                                "Webinar",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          );
+                        },
+                        loading: () {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        error: (e, s) {
+                          return Center(
+                            child: Text("error"),
+                          );
+                        },
+                      ),
                     );
                   },
                 ),
@@ -81,39 +86,44 @@ class InfoPage extends StatelessWidget {
                 Consumer(
                   builder: (context, ref, child) {
                     final count = ref.watch(countPendaftarProvider);
-                    return count.when(
-                      data: (data) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              data.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline4!
-                                  .copyWith(color: Colors.white),
-                            ),
-                            Text(
-                              "Pendaftar",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ],
-                        );
+                    return GestureDetector(
+                      onTap: () {
+                        ref.refresh(countPendaftarProvider);
                       },
-                      loading: () {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                      error: (e, s) {
-                        return Center(
-                          child: Text("error"),
-                        );
-                      },
+                      child: count.when(
+                        data: (data) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                data.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4!
+                                    .copyWith(color: Colors.white),
+                              ),
+                              Text(
+                                "Pendaftar",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          );
+                        },
+                        loading: () {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        error: (e, s) {
+                          return Center(
+                            child: Text("error"),
+                          );
+                        },
+                      ),
                     );
                   },
                 ),
@@ -146,7 +156,12 @@ class _InfoAction extends ConsumerWidget {
           Card(
             color: Colors.pinkAccent,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                context.router.push(PenyelenggaraRouter(
+                  isFavorite: true,
+                  userId: user.id,
+                ));
+              },
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Column(
@@ -171,10 +186,17 @@ class _InfoAction extends ConsumerWidget {
             color: Colors.teal,
             child: InkWell(
               onTap: () {
-                context.router.push(JoinedWebinarRouter(
-                  type: webinarType.my,
-                  userId: user.id,
-                ));
+                if (user.role == 1) {
+                  context.router.push(JoinedWebinarRouter(
+                    type: webinarType.joined,
+                    userId: user.id,
+                  ));
+                } else if (user.role == 3) {
+                  context.router.push(JoinedWebinarRouter(
+                    type: webinarType.my,
+                    userId: user.id,
+                  ));
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -182,13 +204,13 @@ class _InfoAction extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Icon(
-                      Icons.edit,
+                      user.role == 1 ? Icons.edit : Icons.check_rounded,
                       size: 36,
                       color: Colors.white,
                     ),
                     SizedBox(height: 8),
                     Text(
-                      "Dibuat",
+                      user.role == 1 ? "Dibuat" : "Terdaftar",
                       style: TextStyle(color: Colors.white),
                     ),
                   ],
@@ -197,9 +219,10 @@ class _InfoAction extends ConsumerWidget {
             ),
           ),
           Card(
+            color: Colors.orange[400],
             child: InkWell(
               onTap: () {
-                context.router.push(PenyelenggaraRouter());
+                context.router.push(PenyelenggaraRouter(isFavorite: false));
               },
               child: Padding(
                 padding: const EdgeInsets.all(24.0),

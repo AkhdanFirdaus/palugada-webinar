@@ -116,7 +116,9 @@ class WebinarDetailPage extends HookConsumerWidget {
                                     ),
                                     SizedBox(height: 8),
                                     Chip(
-                                      label: Text("3"),
+                                      label: Text((data.kuota -
+                                              (data.pendaftar?.length ?? 0))
+                                          .toString()),
                                       backgroundColor: Colors.red,
                                     ),
                                   ],
@@ -182,7 +184,7 @@ class WebinarDetailPage extends HookConsumerWidget {
                           child: ListTile(
                             onTap: () {
                               context.router.push(PenyelenggaraDetailRouter(
-                                penyelenggaraId: data.penyelenggara.id,
+                                penyelenggaraId: data.penyelenggara.id!,
                               ));
                             },
                             leading: Icon(Icons.apartment),
@@ -218,43 +220,47 @@ class WebinarDetailPage extends HookConsumerWidget {
                     widthFactor: 1,
                     child: Builder(builder: (context) {
                       if (user is User) {
-                        if (data.pendaftar!
-                                .indexWhere((e) => e.id == user.id) !=
-                            -1) {
-                          return ElevatedButton(
-                            onPressed: () {
-                              MotionToast.info(
-                                title: "Sudah Terdaftar",
-                                description: "Anda sudah terdaftar",
-                              ).show(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
-                            ),
-                            child: Text("Sudah Daftar"),
-                          );
+                        if (user.id! != data.penyelenggara.id) {
+                          if (data.pendaftar!
+                                  .indexWhere((e) => e.id == user.id) !=
+                              -1) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                MotionToast.info(
+                                  title: "Sudah Terdaftar",
+                                  description: "Anda sudah terdaftar",
+                                ).show(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.green,
+                              ),
+                              child: Text("Sudah Daftar"),
+                            );
+                          } else {
+                            return ElevatedButton(
+                              onPressed: () {
+                                ref
+                                    .read(webinarProvider)
+                                    .registerWebinar(webinarId, user.id!)
+                                    .then((value) {
+                                  MotionToast.success(
+                                    title: "Daftar",
+                                    description: value,
+                                  ).show(context);
+                                  ref.refresh(
+                                      webinarDetailFutureProvider(webinarId));
+                                }).catchError((e) {
+                                  MotionToast.error(
+                                    title: "Daftar",
+                                    description: e.toString(),
+                                  ).show(context);
+                                });
+                              },
+                              child: Text("Daftar"),
+                            );
+                          }
                         } else {
-                          return ElevatedButton(
-                            onPressed: () {
-                              ref
-                                  .read(webinarProvider)
-                                  .registerWebinar(webinarId, user.id)
-                                  .then((value) {
-                                MotionToast.success(
-                                  title: "Daftar",
-                                  description: value,
-                                ).show(context);
-                                ref.refresh(
-                                    webinarDetailFutureProvider(webinarId));
-                              }).catchError((e) {
-                                MotionToast.error(
-                                  title: "Daftar",
-                                  description: e.toString(),
-                                ).show(context);
-                              });
-                            },
-                            child: Text("Daftar"),
-                          );
+                          return SizedBox();
                         }
                       } else {
                         return ElevatedButton(

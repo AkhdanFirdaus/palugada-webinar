@@ -66,6 +66,9 @@ class WebinarPage extends HookConsumerWidget {
                 case webinarType.my:
                   ref.refresh(myWebinarFutureProvider(userId!));
                   break;
+                default:
+                  ref.refresh(webinarFutureProvider);
+                  break;
               }
             }
             return Future.value();

@@ -92,8 +92,10 @@ class AppRouter extends _i1.RootStackRouter {
         }),
     PenyelenggaraRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
-        builder: (_) {
-          return _i9.PenyelenggaraPage();
+        builder: (data) {
+          final args = data.argsAs<PenyelenggaraRouterArgs>();
+          return _i9.PenyelenggaraPage(
+              isFavorite: args.isFavorite, userId: args.userId);
         }),
     PenyelenggaraDetailRouter.name: (routeData) => _i1.MaterialPageX<dynamic>(
         routeData: routeData,
@@ -261,10 +263,22 @@ class RegisterRouterArgs {
   final int role;
 }
 
-class PenyelenggaraRouter extends _i1.PageRouteInfo {
-  const PenyelenggaraRouter() : super(name, path: 'penyelenggara');
+class PenyelenggaraRouter extends _i1.PageRouteInfo<PenyelenggaraRouterArgs> {
+  PenyelenggaraRouter({required bool isFavorite, int? userId})
+      : super(name,
+            path: 'penyelenggara',
+            args: PenyelenggaraRouterArgs(
+                isFavorite: isFavorite, userId: userId));
 
   static const String name = 'PenyelenggaraRouter';
+}
+
+class PenyelenggaraRouterArgs {
+  const PenyelenggaraRouterArgs({required this.isFavorite, this.userId});
+
+  final bool isFavorite;
+
+  final int? userId;
 }
 
 class PenyelenggaraDetailRouter

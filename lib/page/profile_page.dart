@@ -72,16 +72,28 @@ class ProfilePage extends HookConsumerWidget {
                         ),
                       ),
                       SizedBox(height: 38),
-                      Text(userState.role == 1 ? "Institusi" : "Asal"),
-                      SizedBox(height: 8),
                       Card(
-                        child: ListTile(title: Text(userState.asal)),
-                      ),
-                      SizedBox(height: 38),
-                      Text("Nomor Telepon"),
-                      SizedBox(height: 8),
-                      Card(
-                        child: ListTile(title: Text(userState.notelp)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.mail),
+                              title: Text(userState.email),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.phone),
+                              title: Text(userState.notelp),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.apartment),
+                              title: Text(
+                                userState.asal,
+                                softWrap: true,
+                                maxLines: null,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   );

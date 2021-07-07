@@ -57,12 +57,12 @@ class UserAdapter extends TypeAdapter<User> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return User(
-      id: fields[0] as int,
       name: fields[1] as String,
       email: fields[2] as String,
       notelp: fields[3] as String,
       asal: fields[4] as String,
-      role: fields[5] as int,
+      id: fields[0] as int?,
+      role: fields[5] as int?,
     );
   }
 
