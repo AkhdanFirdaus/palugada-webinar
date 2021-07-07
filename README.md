@@ -1,16 +1,14 @@
-# palugada
+# palugada-frontend
+Webinar Palugada: Apa yang lu cari gue ada (Akhdan MF &amp; Zulfa DA)
 
-A new Flutter project.
+## About Webinar Palugada
+Webinar Palugada adalah aplikasi frontend webinar mobile yang dibuat menggunakan framework flutter dengan bahasa pemrograman dart
+Backend aplikasi ini tersedia di [Webinar-Backend](https://github.com/AkhdanFirdaus/palugada-backend)
 
-## Getting Started
+## Kelompok
+- Akhdan Musyaffa Firdaus 		1197050010 
+- Zulfa Dwi Audina            1197050134
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Informatika UIN Sunan Gunung Djati Bandung 2020-2021
+### Mata Kuliah Praktikum Pemrograman Berorientasi Objek
+### Dosen Pengampu : Aldy Rialdy Atmadja, MT
