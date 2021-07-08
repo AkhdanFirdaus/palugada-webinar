@@ -11,11 +11,14 @@ class NarasumberNotifier extends StateNotifier<List<User>> {
       : super([User(asal: "", email: "", name: "", notelp: "")]);
 
   void addNarasumber() {
-    state.add(User(asal: "", email: "", name: "", notelp: ""));
+    state = [...state, User(asal: "", email: "", name: "", notelp: "")];
   }
 
   void removeNarasumber(int index) {
-    state.removeAt(index);
+    state = [
+      for (int i = 0; i < state.length; i++)
+        if (i != index) state[i],
+    ];
   }
 
   void setAsal(int index, String asal) {
