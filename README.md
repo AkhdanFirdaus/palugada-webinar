@@ -9,7 +9,7 @@ Backend aplikasi ini tersedia di [Webinar-Backend](https://github.com/AkhdanFird
 1.  Instalasi terlebih dahulu [Webinar-Backend](https://github.com/AkhdanFirdaus/palugada-backend) nya
 2.  Serve aplikasi backend dengan host yang ditentukan (biasanya sesuai ip): php artisan serve --host 192.168.x.x
 3.  masuk direktori frontend ini dan ketikkan perintah: flutter pub get
-4.  ganti konstanta baseUrl pada folder utils/constants/api_constants.dart
+4.  ganti konstanta baseUrl pada folder utils/constants/api_constants.dart sesuai host yang sudah di serve sebelumnya
 5.  jalankan aplikasi dengan perintah: flutter run
 
 ## Kelompok
