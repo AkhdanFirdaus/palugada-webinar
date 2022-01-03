@@ -27,7 +27,7 @@ class WebinarPage extends HookConsumerWidget {
     final _scrollController = useScrollController();
     final searchController = useTextEditingController();
 
-    AsyncValue<List<WebinarState>> webinarList() {
+    AsyncValue<List<Event>> webinarList() {
       if (type != null) {
         switch (type!) {
           case WebinarType.all:
@@ -144,7 +144,7 @@ class WebinarPage extends HookConsumerWidget {
                         if (filteredData.isNotEmpty) {
                           return Column(
                             children: [
-                              for (WebinarState webinar in filteredData)
+                              for (Event webinar in filteredData)
                                 _CardItem(webinar),
                             ],
                           );
@@ -170,7 +170,7 @@ class WebinarPage extends HookConsumerWidget {
 
 class _CardItem extends StatelessWidget {
   _CardItem(this.webinar);
-  final WebinarState webinar;
+  final Event webinar;
 
   @override
   Widget build(BuildContext context) {

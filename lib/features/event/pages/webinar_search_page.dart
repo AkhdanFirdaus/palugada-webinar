@@ -6,7 +6,7 @@ import '../../../app/controllers/count_controller.dart';
 import '../../../core/constants/enums.dart';
 import '../../../core/routes/router.dart';
 
-class InfoPage extends StatelessWidget {
+class WebinarSearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -5,13 +5,13 @@ import '../../../core/network/api.dart';
 import '../../auth/index.dart';
 import '../index.dart';
 
-final webinarProvider = Provider<WebinarController>((ref) {
+final webinarProvider = Provider<EventController>((ref) {
   final api = ref.watch(apiProvider);
-  return WebinarController(api);
+  return EventController(api);
 });
 
-class WebinarController {
-  WebinarController(this.api);
+class EventController {
+  EventController(this.api);
   final Dio api;
 
   Future<String> registerWebinar(int webinarId, int userId) async {
@@ -60,44 +60,44 @@ class WebinarController {
   }
 }
 
-final webinarFutureProvider = FutureProvider<List<WebinarState>>((ref) async {
+final webinarFutureProvider = FutureProvider<List<Event>>((ref) async {
   final api = ref.read(apiProvider);
   final response = await api.get(ApiConstants.webinar);
   return (response.data['data'] as List)
-      .map<WebinarState>((e) => WebinarState.fromJson(e as Json))
+      .map<Event>((e) => Event.fromJson(e as Json))
       .toList();
 });
 
 final myWebinarFutureProvider =
-    FutureProviderFamily<List<WebinarState>, int>((ref, userId) async {
+    FutureProviderFamily<List<Event>, int>((ref, userId) async {
   final api = ref.read(apiProvider);
   final response = await api.get(ApiConstants.myWebinar(userId));
   return (response.data['data'] as List)
-      .map<WebinarState>((e) => WebinarState.fromJson(e as Json))
+      .map<Event>((e) => Event.fromJson(e as Json))
       .toList();
 });
 
 final joinedWebinarFutureProvider =
-    FutureProviderFamily<List<WebinarState>, int>((ref, userId) async {
+    FutureProviderFamily<List<Event>, int>((ref, userId) async {
   final api = ref.read(apiProvider);
   final response = await api.get(ApiConstants.joinedWebinar(userId));
   return (response.data['data'] as List)
-      .map<WebinarState>((e) => WebinarState.fromJson(e as Json))
+      .map<Event>((e) => Event.fromJson(e as Json))
       .toList();
 });
 
 final webinarPenyelenggaraFutureProvider =
-    FutureProviderFamily<List<WebinarState>, int>((ref, userId) async {
+    FutureProviderFamily<List<Event>, int>((ref, userId) async {
   final api = ref.read(apiProvider);
   final response = await api.get(ApiConstants.penyelenggaraWebinar(userId));
   return (response.data['data'] as List)
-      .map<WebinarState>((e) => WebinarState.fromJson(e as Json))
+      .map<Event>((e) => Event.fromJson(e as Json))
       .toList();
 });
 
 final webinarDetailFutureProvider =
-    FutureProviderFamily<WebinarState, int>((ref, id) async {
+    FutureProviderFamily<Event, int>((ref, id) async {
   final api = ref.read(apiProvider);
   final response = await api.get(ApiConstants.webinarDetail(id));
-  return WebinarState.fromJson(response.data['data'] as Json);
+  return Event.fromJson(response.data['data'] as Json);
 });

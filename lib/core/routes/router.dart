@@ -49,7 +49,7 @@ part 'router.gr.dart';
             AutoRoute(
               path: 'info',
               name: 'InfoRouter',
-              page: InfoPage,
+              page: WebinarSearchPage,
             ),
             AutoRoute(
               path: 'webinar',

@@ -7,6 +7,8 @@
 // **************************************************************************
 // AutoRouteGenerator
 // **************************************************************************
+//
+// ignore_for_file: type=lint
 
 part of 'router.dart';
 
@@ -87,7 +89,8 @@ class _$AppRouter extends RootStackRouter {
               PenyelenggaraDetailPage(penyelenggaraId: args.penyelenggaraId));
     },
     InfoRouter.name: (routeData) {
-      return MaterialPageX<dynamic>(routeData: routeData, child: InfoPage());
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: WebinarSearchPage());
     },
     WebinarRouter.name: (routeData) {
       final args = routeData.argsAs<WebinarRouterArgs>(
@@ -351,7 +354,7 @@ class PenyelenggaraDetailRouterArgs {
 }
 
 /// generated route for
-/// [InfoPage]
+/// [WebinarSearchPage]
 class InfoRouter extends PageRouteInfo<void> {
   const InfoRouter() : super(InfoRouter.name, path: 'info');
 

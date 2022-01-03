@@ -6,7 +6,7 @@ import 'package:motion_toast/motion_toast.dart';
 
 import '../../auth/index.dart';
 import '../../speaker/controllers/narasumber_controller.dart';
-import '../controllers/webinar_controller.dart';
+import '../controllers/event_controller.dart';
 
 class WebinarCreate extends HookConsumerWidget {
   @override
