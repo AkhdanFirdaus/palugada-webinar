@@ -5,10 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../core/routes/router.dart';
 import '../../auth/index.dart';
 import '../../event/index.dart';
-import '../controllers/penyelenggara_controller.dart';
+import '../controllers/event-organizer_controller.dart';
 
-class PenyelenggaraPage extends HookConsumerWidget {
-  PenyelenggaraPage({required this.isFavorite, this.userId});
+class EventOrganizerPage extends HookConsumerWidget {
+  EventOrganizerPage({required this.isFavorite, this.userId});
   final bool isFavorite;
   final int? userId;
 
@@ -21,7 +21,7 @@ class PenyelenggaraPage extends HookConsumerWidget {
       if (isFavorite) {
         return ref.watch(favoriteUserFutureProvider(userId!));
       }
-      return ref.watch(penyelenggaraFutureProvider);
+      return ref.watch(eventOrganizerFutureProvider);
     }
 
     final search = useState<String>("");
@@ -93,7 +93,7 @@ class PenyelenggaraPage extends HookConsumerWidget {
                             return ref
                                 .refresh(favoriteUserFutureProvider(userId!));
                           } else {
-                            return ref.refresh(penyelenggaraFutureProvider);
+                            return ref.refresh(eventOrganizerFutureProvider);
                           }
                         },
                         icon: Icon(Icons.refresh),

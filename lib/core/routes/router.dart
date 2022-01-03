@@ -21,7 +21,7 @@ part 'router.gr.dart';
       page: SplashPage,
     ),
     AutoRoute(
-      path: '/',
+      path: 'auth',
       name: 'UnauthenticatedWrapperRouter',
       page: EmptyRouterPage,
       children: [
@@ -29,6 +29,7 @@ part 'router.gr.dart';
           path: '',
           name: 'ChooseRouter',
           page: ChoosePage,
+          initial: true,
         ),
         AutoRoute(
           path: 'login-user',
@@ -43,7 +44,7 @@ part 'router.gr.dart';
       ],
     ),
     AutoRoute(
-      path: 'home',
+      path: '',
       name: 'HomeWrapperRouter',
       page: EmptyRouterPage,
       children: [
@@ -51,6 +52,7 @@ part 'router.gr.dart';
           path: '',
           name: 'HomeRouter',
           page: HomePage,
+          initial: true,
           children: [
             AutoRoute(
               path: 'info',
@@ -98,12 +100,12 @@ part 'router.gr.dart';
         AutoRoute(
           path: 'penyelenggara',
           name: 'PenyelenggaraRouter',
-          page: PenyelenggaraPage,
+          page: EventOrganizerPage,
         ),
         AutoRoute(
           path: 'penyelenggara/:id',
           name: 'PenyelenggaraDetailRouter',
-          page: PenyelenggaraDetailPage,
+          page: EventOrganizerDetailPage,
         ),
       ],
     ),

@@ -1,21 +1,21 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:motion_toast/motion_toast.dart';
-import 'package:palugada/features/auth/index.dart';
-import 'package:palugada/features/event/index.dart';
 
-import '../controllers/penyelenggara_controller.dart';
+import '../../auth/index.dart';
+import '../../event/widgets/event_list_widget.dart';
+import '../controllers/event-organizer_controller.dart';
 
-class PenyelenggaraDetailPage extends HookConsumerWidget {
-  PenyelenggaraDetailPage(
+class EventOrganizerDetailPage extends HookConsumerWidget {
+  EventOrganizerDetailPage(
       {@PathParam('penyelenggaraId') required this.penyelenggaraId});
   final int penyelenggaraId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final penyelenggara =
-        ref.watch(penyelenggaraDetailFutureProvider(penyelenggaraId));
+        ref.watch(eventOrganizerDetailFutureProvider(penyelenggaraId));
     final userId = (ref.watch(userProvider) as User).id ?? -1;
     return Scaffold(
       body: SafeArea(
@@ -24,7 +24,8 @@ class PenyelenggaraDetailPage extends HookConsumerWidget {
           data: (data) {
             return RefreshIndicator(
               onRefresh: () {
-                ref.refresh(penyelenggaraDetailFutureProvider(penyelenggaraId));
+                ref.refresh(
+                    eventOrganizerDetailFutureProvider(penyelenggaraId));
                 return Future.value();
               },
               child: ListView(
@@ -100,7 +101,7 @@ class PenyelenggaraDetailPage extends HookConsumerWidget {
                       ),
                     );
                   }),
-                  _WebinarPenyelenggaraWidget(data.id!),
+                  EventListWidget(data.id!),
                 ],
               ),
             );
@@ -112,60 +113,6 @@ class PenyelenggaraDetailPage extends HookConsumerWidget {
             return Text(e.toString());
           },
         ),
-      ),
-    );
-  }
-}
-
-class _WebinarPenyelenggaraWidget extends HookConsumerWidget {
-  _WebinarPenyelenggaraWidget(this.userId);
-  final int userId;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final webinarList = ref.watch(webinarPenyelenggaraFutureProvider(userId));
-    return Card(
-      child: webinarList.when(
-        data: (data) {
-          if (data.isNotEmpty) {
-            return Column(
-              children: [
-                for (final webinar in data)
-                  ListTile(
-                    title: Text(webinar.nama),
-                    subtitle: Text(
-                      webinar.jamMulai +
-                          "-" +
-                          webinar.jamSelesai +
-                          "\n" +
-                          webinar.tanggal,
-                    ),
-                    isThreeLine: true,
-                    trailing: Chip(
-                      label: Text(webinar.kuota.toString()),
-                    ),
-                  ),
-              ],
-            );
-          } else {
-            return Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Center(child: Text("Tidak ada webinar")),
-            );
-          }
-        },
-        loading: () {
-          return Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Center(child: CircularProgressIndicator()),
-          );
-        },
-        error: (e, s) {
-          return Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Center(child: Text(e.toString())),
-          );
-        },
       ),
     );
   }

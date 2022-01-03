@@ -19,7 +19,7 @@ class WebinarCreate extends HookConsumerWidget {
     final jamMulaiController = useTextEditingController();
     final jamSelesaiController = useTextEditingController();
 
-    final listNarasumber = ref.watch(narasumberProvider);
+    final listNarasumber = ref.watch(speakerProvider);
     return Scaffold(
       body: SafeArea(
         minimum: const EdgeInsets.all(24.0),
@@ -187,7 +187,7 @@ class WebinarCreate extends HookConsumerWidget {
                         // controller: namaNarasumberController,
                         decoration: InputDecoration(labelText: "Nama"),
                         onChanged: (val) {
-                          ref.read(narasumberProvider.notifier).setNama(i, val);
+                          ref.read(speakerProvider.notifier).setNama(i, val);
                         },
                       ),
                       SizedBox(height: 18),
@@ -196,9 +196,7 @@ class WebinarCreate extends HookConsumerWidget {
                         decoration: InputDecoration(labelText: "Email"),
                         keyboardType: TextInputType.emailAddress,
                         onChanged: (val) {
-                          ref
-                              .read(narasumberProvider.notifier)
-                              .setEmail(i, val);
+                          ref.read(speakerProvider.notifier).setEmail(i, val);
                         },
                       ),
                       SizedBox(height: 18),
@@ -207,9 +205,7 @@ class WebinarCreate extends HookConsumerWidget {
                         decoration: InputDecoration(labelText: "Nomor Telp"),
                         keyboardType: TextInputType.phone,
                         onChanged: (val) {
-                          ref
-                              .read(narasumberProvider.notifier)
-                              .setNoTelp(i, val);
+                          ref.read(speakerProvider.notifier).setNoTelp(i, val);
                         },
                       ),
                       SizedBox(height: 18),
@@ -217,7 +213,7 @@ class WebinarCreate extends HookConsumerWidget {
                         // controller: asalNarasumberController,
                         decoration: InputDecoration(labelText: "Asal"),
                         onChanged: (val) {
-                          ref.read(narasumberProvider.notifier).setAsal(i, val);
+                          ref.read(speakerProvider.notifier).setAsal(i, val);
                         },
                       ),
                       SizedBox(height: 18),
@@ -231,8 +227,8 @@ class WebinarCreate extends HookConsumerWidget {
                                     print("add");
                                     print(listNarasumber.length);
                                     ref
-                                        .read(narasumberProvider.notifier)
-                                        .addNarasumber();
+                                        .read(speakerProvider.notifier)
+                                        .addSpeaker();
                                   },
                                   child: Icon(Icons.add),
                                 ),
@@ -244,8 +240,8 @@ class WebinarCreate extends HookConsumerWidget {
                                 ElevatedButton(
                                   onPressed: () {
                                     ref
-                                        .read(narasumberProvider.notifier)
-                                        .removeNarasumber(i);
+                                        .read(speakerProvider.notifier)
+                                        .removeSpeaker(i);
                                   },
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.red,

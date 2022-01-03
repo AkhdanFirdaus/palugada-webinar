@@ -1,20 +1,20 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../auth/models/user.dart';
 
-final narasumberProvider =
-    StateNotifierProvider<NarasumberNotifier, List<User>>((ref) {
-  return NarasumberNotifier();
+final speakerProvider =
+    StateNotifierProvider<SpeakerNotifier, List<User>>((ref) {
+  return SpeakerNotifier();
 });
 
-class NarasumberNotifier extends StateNotifier<List<User>> {
-  NarasumberNotifier([List<User>? state])
+class SpeakerNotifier extends StateNotifier<List<User>> {
+  SpeakerNotifier([List<User>? state])
       : super([User(asal: "", email: "", name: "", notelp: "")]);
 
-  void addNarasumber() {
+  void addSpeaker() {
     state = [...state, User(asal: "", email: "", name: "", notelp: "")];
   }
 
-  void removeNarasumber(int index) {
+  void removeSpeaker(int index) {
     state = [
       for (int i = 0; i < state.length; i++)
         if (i != index) state[i],

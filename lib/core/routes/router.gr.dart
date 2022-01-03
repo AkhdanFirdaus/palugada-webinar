@@ -79,7 +79,7 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<PenyelenggaraRouterArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: PenyelenggaraPage(
+          child: EventOrganizerPage(
               isFavorite: args.isFavorite, userId: args.userId));
     },
     PenyelenggaraDetailRouter.name: (routeData) {
@@ -90,7 +90,7 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
           routeData: routeData,
           child:
-              PenyelenggaraDetailPage(penyelenggaraId: args.penyelenggaraId));
+              EventOrganizerDetailPage(penyelenggaraId: args.penyelenggaraId));
     },
     InfoRouter.name: (routeData) {
       return MaterialPageX<dynamic>(
@@ -110,8 +110,10 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   List<RouteConfig> get routes => [
+        RouteConfig('/#redirect',
+            path: '/', redirectTo: 'splash', fullMatch: true),
         RouteConfig(SplashRoute.name, path: 'splash'),
-        RouteConfig(UnauthenticatedWrapperRouter.name, path: '/', children: [
+        RouteConfig(UnauthenticatedWrapperRouter.name, path: 'auth', children: [
           RouteConfig(ChooseRouter.name,
               path: '', parent: UnauthenticatedWrapperRouter.name),
           RouteConfig(UserLoginRouter.name,
@@ -119,7 +121,7 @@ class _$AppRouter extends RootStackRouter {
           RouteConfig(CreatorLoginRouter.name,
               path: 'login-creator', parent: UnauthenticatedWrapperRouter.name)
         ]),
-        RouteConfig(HomeWrapperRouter.name, path: 'home', children: [
+        RouteConfig(HomeWrapperRouter.name, path: '', children: [
           RouteConfig(HomeRouter.name,
               path: '',
               parent: HomeWrapperRouter.name,
@@ -167,7 +169,7 @@ class SplashRoute extends PageRouteInfo<void> {
 class UnauthenticatedWrapperRouter extends PageRouteInfo<void> {
   const UnauthenticatedWrapperRouter({List<PageRouteInfo>? children})
       : super(UnauthenticatedWrapperRouter.name,
-            path: '/', initialChildren: children);
+            path: 'auth', initialChildren: children);
 
   static const String name = 'UnauthenticatedWrapperRouter';
 }
@@ -176,7 +178,7 @@ class UnauthenticatedWrapperRouter extends PageRouteInfo<void> {
 /// [EmptyRouterPage]
 class HomeWrapperRouter extends PageRouteInfo<void> {
   const HomeWrapperRouter({List<PageRouteInfo>? children})
-      : super(HomeWrapperRouter.name, path: 'home', initialChildren: children);
+      : super(HomeWrapperRouter.name, path: '', initialChildren: children);
 
   static const String name = 'HomeWrapperRouter';
 }
@@ -317,7 +319,7 @@ class RegisterRouterArgs {
 }
 
 /// generated route for
-/// [PenyelenggaraPage]
+/// [EventOrganizerPage]
 class PenyelenggaraRouter extends PageRouteInfo<PenyelenggaraRouterArgs> {
   PenyelenggaraRouter({required bool isFavorite, int? userId})
       : super(PenyelenggaraRouter.name,
@@ -342,7 +344,7 @@ class PenyelenggaraRouterArgs {
 }
 
 /// generated route for
-/// [PenyelenggaraDetailPage]
+/// [EventOrganizerDetailPage]
 class PenyelenggaraDetailRouter
     extends PageRouteInfo<PenyelenggaraDetailRouterArgs> {
   PenyelenggaraDetailRouter({required int penyelenggaraId})

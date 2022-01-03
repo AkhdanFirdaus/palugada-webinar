@@ -1,4 +1,4 @@
-export 'controllers/penyelenggara_controller.dart';
+export 'controllers/event-organizer_controller.dart';
 
-export 'pages/penyelenggara_detail.dart';
-export 'pages/penyelenggara_page.dart';
+export 'pages/event-organizer_detail.dart';
+export 'pages/event-organizer_page.dart';
