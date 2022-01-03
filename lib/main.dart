@@ -1,15 +1,12 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'controllers/user_controller.dart';
-import 'models/user.dart';
-import 'utils/constants/persistence_constants.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-import 'utils/routes/router.gr.dart';
-import 'utils/themes/palugada_theme.dart';
+import 'features/auth/index.dart';
+import 'core/constants/persistence_constants.dart';
+import 'core/routes/router.dart';
+import 'core/themes/palugada_theme.dart';
 
 void main() async {
   setPathUrlStrategy();
