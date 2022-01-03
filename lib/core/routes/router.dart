@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/home_page.dart';
+import '../../app/splash_page.dart';
 import '../../features/auth/index.dart';
 import '../../features/event-organizer/index.dart';
 import '../../features/event/index.dart';
@@ -14,6 +15,11 @@ part 'router.gr.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
+    AutoRoute(
+      path: 'splash',
+      initial: true,
+      page: SplashPage,
+    ),
     AutoRoute(
       path: '/',
       name: 'UnauthenticatedWrapperRouter',

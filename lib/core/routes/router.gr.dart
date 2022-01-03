@@ -17,6 +17,10 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    SplashRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: const SplashPage());
+    },
     UnauthenticatedWrapperRouter.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: const EmptyRouterPage());
@@ -106,6 +110,7 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   List<RouteConfig> get routes => [
+        RouteConfig(SplashRoute.name, path: 'splash'),
         RouteConfig(UnauthenticatedWrapperRouter.name, path: '/', children: [
           RouteConfig(ChooseRouter.name,
               path: '', parent: UnauthenticatedWrapperRouter.name),
@@ -147,6 +152,14 @@ class _$AppRouter extends RootStackRouter {
               path: 'penyelenggara/:id', parent: HomeWrapperRouter.name)
         ])
       ];
+}
+
+/// generated route for
+/// [SplashPage]
+class SplashRoute extends PageRouteInfo<void> {
+  const SplashRoute() : super(SplashRoute.name, path: 'splash');
+
+  static const String name = 'SplashRoute';
 }
 
 /// generated route for
